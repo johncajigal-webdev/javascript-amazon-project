@@ -1,7 +1,7 @@
-let productsHTML = '';
+let productsHTML = "";
 
-products.forEach((product)=>{
-productsHTML += `<div class="product-container">
+products.forEach((product) => {
+  productsHTML += `<div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
               src="${product.image}">
@@ -45,11 +45,54 @@ productsHTML += `<div class="product-container">
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart" data-product-id="${
+            product.id
+          }">
             Add to Cart
           </button>
         </div>`;
 });
 
-const productsHtml = document.querySelector('.js-products-grid');
+const productsHtml = document.querySelector(".js-products-grid");
 productsHtml.innerHTML = productsHTML;
+
+
+//s-making Add to Cart button interactive
+let addToCartButton = document.querySelectorAll(".js-add-to-cart");
+
+addToCartButton.forEach((button) => {
+  button.addEventListener("click", () => {
+    const productId = button.dataset.productId;
+
+    //s-s-making sure quantity adds up. No duplication of properties in Cart.js
+    let matchingItem;
+    cart.forEach((item) => {
+      if (productId === item.productId) {
+        matchingItem = item;
+      }
+    });
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    } else {
+      cart.push({
+        productId: productId,
+        quantity: 1,
+      });
+    }
+    //e-e-making sure quantity adds up. No duplication of properties in Cart.js
+    
+    //e-making Add to Cart button interactive
+
+    //s-Updating the Cart Quantity
+    let cartQuantity = 0;
+
+    cart.forEach((item) => {
+      cartQuantity += item.quantity;
+    });
+
+    const cartQuantityHtml = document.querySelector(".js-cart-quantity");
+    cartQuantityHtml.innerHTML = cartQuantity;
+    //e-Updating the Cart Quantity
+  });
+});
