@@ -1,0 +1,10 @@
+.item{
+  display: inline-block;
+  border: solid 1px black;
+  padding:2px 5px;
+}
+
+.cart{
+  display: inline-block;
+}
+
