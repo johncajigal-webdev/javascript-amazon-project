@@ -1,13 +1,14 @@
-export let cart = [
-  {
-    productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-    quantity: 2,
-  },
-  {
-    productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
-    quantity: 1,
-  },
-];
+export let cart = JSON.parse(localStorage.getItem('cart'));
+
+if(!cart){ //if the cart is empty, this is the default value
+  cart = [
+ //no value added
+  ];
+}
+
+function saveToStorage(){
+  localStorage.setItem('cart', JSON.stringify(cart));
+};
 
 export function addToCart(productId) {
   //s-s-making sure quantity adds up. No duplication of properties in Cart.js
@@ -26,6 +27,8 @@ export function addToCart(productId) {
       quantity: 1,
     });
   }
+
+  saveToStorage();
   //e-e-making sure quantity adds up. No duplication of properties in Cart.js
 }
 
@@ -40,4 +43,6 @@ if(cartItem.productId !== productId){
 });
 
 cart = newCart;
+
+saveToStorage();
 }
