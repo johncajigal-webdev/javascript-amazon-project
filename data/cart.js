@@ -2,7 +2,11 @@ export let cart = JSON.parse(localStorage.getItem('cart'));
 
 if(!cart){ //if the cart is empty, this is the default value
   cart = [
- //no value added
+    {
+      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+      quantity: 2,
+      deliveryOptionId: "1",
+    },
   ];
 }
 
@@ -25,6 +29,7 @@ export function addToCart(productId) {
     cart.push({
       productId: productId,
       quantity: 1,
+      deliveryOptionId: '1'
     });
   }
 
