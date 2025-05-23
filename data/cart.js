@@ -1,18 +1,20 @@
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart = JSON.parse(localStorage.getItem("cart"));
 
-if(!cart){ //if the cart is empty, this is the default value
+if (!cart) {
+  //if the cart is empty, this is the default value
   cart = [
     {
       productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
       quantity: 2,
-      deliveryOptionId: "1",
+      deliveryOptionId: "3",
     },
   ];
 }
 
-function saveToStorage(){
-  localStorage.setItem('cart', JSON.stringify(cart));
-};
+function saveToStorage() {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 
 export function addToCart(productId) {
   //s-s-making sure quantity adds up. No duplication of properties in Cart.js
@@ -29,32 +31,29 @@ export function addToCart(productId) {
     cart.push({
       productId: productId,
       quantity: 1,
-      deliveryOptionId: '1'
+      deliveryOptionId: "1",
     });
   }
+  //e-e-making sure quantity adds up. No duplication of properties in Cart.js
 
   saveToStorage();
-  //e-e-making sure quantity adds up. No duplication of properties in Cart.js
 }
 
+export function removeFromCart(productId) {
+  const newCart = [];
 
-export function removeFromCart(productId){
-const newCart = [];
+  cart.forEach((cartItem) => {
+    if (cartItem.productId !== productId) {
+      newCart.push(cartItem);
+    }
+  });
 
-cart.forEach((cartItem)=>{
-if(cartItem.productId !== productId){
-  newCart.push(cartItem);
+  cart = newCart;
+
+  saveToStorage();
 }
-});
 
-cart = newCart;
-
-saveToStorage();
-}
-
-
-export function updateDeliveryOption(productId, deliveryOptionId){
-  
+export function updateDeliveryOption(productId, deliveryOptionId) {
   let matchingItem;
   cart.forEach((cartitem) => {
     if (productId === cartitem.productId) {
