@@ -15,7 +15,6 @@ function saveToStorage() {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-
 export function addToCart(productId) {
   //s-s-making sure quantity adds up. No duplication of properties in Cart.js
   let matchingItem;
