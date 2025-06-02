@@ -1,4 +1,3 @@
-
 import { formatCurrency } from "../scripts/utils/money.js";
 console.log("Test suite: formatCurrency");
 //Basic Test Case - tests if the code is working
