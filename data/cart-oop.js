@@ -1,66 +1,88 @@
-export let cart = JSON.parse(localStorage.getItem("cart"));
+//use PascalCase for things that generate objects
+function Cart(localStorageKey){
+  const cart = {
+    cartItems: undefined,
 
-if (!cart) {
-  //if the cart is empty, this is the default value
-  cart = [
-    {
-      productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
-      quantity: 2,
-      deliveryOptionId: "3",
+    //shorthand method(next line): loadFromStorage(){
+    loadFromStorage: function () {
+      this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
+
+      if (!this.cartItems) {
+        //if the cart is empty, this is the default value
+        this.cartItems = [
+          {
+            productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
+            quantity: 2,
+            deliveryOptionId: "3",
+          },
+        ];
+      }
     },
-  ];
+
+    saveToStorage() {
+      localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
+    },
+
+    addToCart(productId) {
+      //s-s-making sure quantity adds up. No duplication of properties in Cart.js
+      let matchingItem;
+      this.cartItems.forEach((cartitem) => {
+        if (productId === cartitem.productId) {
+          matchingItem = cartitem;
+        }
+      });
+
+      if (matchingItem) {
+        matchingItem.quantity += 1;
+      } else {
+        this.cartItems.push({
+          productId: productId,
+          quantity: 1,
+          deliveryOptionId: "1",
+        });
+      }
+      //e-e-making sure quantity adds up. No duplication of properties in Cart.js
+
+      this.saveToStorage();
+    },
+
+    removeFromCart(productId) {
+      const newCart = [];
+
+      this.cartItems.forEach((cartItem) => {
+        if (cartItem.productId !== productId) {
+          newCart.push(cartItem);
+        }
+      });
+
+      this.cartItems = newCart;
+
+      this.saveToStorage();
+    },
+
+    updateDeliveryOption(productId, deliveryOptionId) {
+      let matchingItem;
+      this.cartItems.forEach((cartitem) => {
+        if (productId === cartitem.productId) {
+          matchingItem = cartitem;
+        }
+      });
+
+      matchingItem.deliveryOptionId = deliveryOptionId;
+
+      this.saveToStorage();
+    },
+  };
+
+  return cart;
+
 }
 
-function saveToStorage() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
+const cart = Cart('cart-oop');
+const businessCart = Cart('cart-business');
 
-export function addToCart(productId) {
-  //s-s-making sure quantity adds up. No duplication of properties in Cart.js
-  let matchingItem;
-  cart.forEach((cartitem) => {
-    if (productId === cartitem.productId) {
-      matchingItem = cartitem;
-    }
-  });
+cart.loadFromStorage();
+businessCart.loadFromStorage();
 
-  if (matchingItem) {
-    matchingItem.quantity += 1;
-  } else {
-    cart.push({
-      productId: productId,
-      quantity: 1,
-      deliveryOptionId: "1",
-    });
-  }
-  //e-e-making sure quantity adds up. No duplication of properties in Cart.js
-
-  saveToStorage();
-}
-
-export function removeFromCart(productId) {
-  const newCart = [];
-
-  cart.forEach((cartItem) => {
-    if (cartItem.productId !== productId) {
-      newCart.push(cartItem);
-    }
-  });
-
-  cart = newCart;
-
-  saveToStorage();
-}
-
-export function updateDeliveryOption(productId, deliveryOptionId) {
-  let matchingItem;
-  cart.forEach((cartitem) => {
-    if (productId === cartitem.productId) {
-      matchingItem = cartitem;
-    }
-  });
-
-  matchingItem.deliveryOptionId = deliveryOptionId;
-
-  saveToStorage();
-}
+console.log(cart);
+console.log(businessCart);
