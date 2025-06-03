@@ -1,16 +1,16 @@
 class Cart {
   //shortcut// cartItems = undefined;
   cartItems;
-  localStorageKey;
+  #localStorageKey;
 
   constructor(localStorageKey) {
-    this.localStorageKey = localStorageKey;
-    this.loadFromStorage();
+    this.#localStorageKey = localStorageKey;
+    this.#loadFromStorage();
   }
 
   //shorthand method(next line): loadFromStorage(){
-  loadFromStorage() {
-    this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
+  #loadFromStorage() {
+    this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey));
 
     if (!this.cartItems) {
       //if the cart is empty, this is the default value
@@ -25,7 +25,7 @@ class Cart {
   }
 
   saveToStorage() {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
   }
 
   addToCart(productId) {
@@ -81,7 +81,6 @@ class Cart {
 
 const cart = new Cart('cart-oop'); // This generates a new object using our class;
 const businessCart = new Cart('cart-business');
-
 
 
 console.log(cart);
