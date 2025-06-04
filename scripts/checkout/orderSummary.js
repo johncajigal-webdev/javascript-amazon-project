@@ -138,4 +138,3 @@ data-delivery-option-id="${deliveryOption.id}">
   });
 }
 
-renderOrderSummary();

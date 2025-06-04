@@ -26,31 +26,28 @@ class Product {
     this.priceCents = productDetails.priceCents;
   }
 
-  getStarsUrl(){
-   return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
 
-  getPrice(){
+  getPrice() {
     return `$${formatCurrency(this.priceCents)}`;
   }
 
-  extraInfoHTML(){
-    return '';
+  extraInfoHTML() {
+    return "";
   }
 }
 
-
 class Clothing extends Product {
   sizeChartLink;
-
 
   constructor(productDetails) {
     super(productDetails);
     this.sizeChartLink = productDetails.sizeChartLink;
   }
 
-  extraInfoHTML(){
-    
+  extraInfoHTML() {
     return `
     <a href="${this.sizeChartLink}" target="_blank">Size chart</a>
     `;
@@ -67,7 +64,6 @@ class Clothing extends Product {
 
 // logThis.call('hello'); //Output:// hello world
 
-
 // const object3 = {
 //   method: ()=>{
 //     console.log(this);
@@ -76,10 +72,32 @@ class Clothing extends Product {
 
 export let products = [];
 
+export function loadProductsFetch() {
+  const promise = fetch("https://supersimplebackend.dev/products")
+    .then((response) => {
+      return response.json();
+    })
+    .then((productsData) => {
+      products = productsData.map((productDetails) => {
+        if (productDetails.type === "clothing") {
+          return new Clothing(productDetails);
+        }
+        return new Product(productDetails);
+      });
+      console.log("load products");
+    }); //makes http request
+
+    return promise;
+}
+/*
+loadProductsFetch().then(()=>{
+});
+*/
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 
   xhr.addEventListener("load", () => {
+    //callback function
     const productData = JSON.parse(xhr.response);
     products = productData.map((productDetails) => {
       if (productDetails.type === "clothing") {
@@ -95,8 +113,6 @@ export function loadProducts(fun) {
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send();
 }
-
-
 
 /*
 export const products = [
