@@ -25,7 +25,7 @@ class Product {
     this.rating = productDetails.rating;
     this.priceCents = productDetails.priceCents;
   }
-
+ 
   getStarsUrl() {
     return `images/ratings/rating-${this.rating.stars * 10}.png`;
   }
@@ -85,10 +85,14 @@ export function loadProductsFetch() {
         return new Product(productDetails);
       });
       console.log("load products");
+    }).catch((error)=>{
+      console.log('');
     }); //makes http request
 
     return promise;
 }
+
+
 /*
 loadProductsFetch().then(()=>{
 });
@@ -110,9 +114,15 @@ export function loadProducts(fun) {
     fun();
   });
 
+  xhr.addEventListener('error', (error)=>{
+    console.log('Unexpected Error. Please try again later!');
+  })
+
   xhr.open("GET", "https://supersimplebackend.dev/products");
   xhr.send();
 }
+
+
 
 /*
 export const products = [
