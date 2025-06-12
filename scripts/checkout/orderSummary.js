@@ -1,5 +1,5 @@
 import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
-import { getProduct, products } from "../../data/products.js";
+import { getProduct } from "../../data/products.js";
 import { formatCurrency } from "../utils/money.js";
 import {
   deliveryOptions,
@@ -137,4 +137,3 @@ data-delivery-option-id="${deliveryOption.id}">
     });
   });
 }
-

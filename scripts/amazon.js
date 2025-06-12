@@ -1,6 +1,5 @@
 import { cart, addToCart } from "../data/cart.js";
 import { products, loadProducts } from "../data/products.js";
-import { formatCurrency } from "./utils/money.js";
 
 loadProducts(renderProductsGrid); //Callback function
 
@@ -16,7 +15,7 @@ function renderProductsGrid() {
 
           <div class="product-name limit-text-to-2-lines">
             ${product.name}
-          </div>yes t
+          </div>
 
           <div class="product-rating-container">
             <img class="product-rating-stars"
@@ -45,8 +44,6 @@ function renderProductsGrid() {
             </select>
             ${product.extraInfoHTML()} <!--Polymorphism -->
           </div>
-
-          
 
           <div class="product-spacer"></div>
 
