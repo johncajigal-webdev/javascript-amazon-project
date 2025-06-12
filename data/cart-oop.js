@@ -2,10 +2,12 @@
 function Cart(localStorageKey){
   const cart = {
     cartItems: undefined,
+    
 
     //shorthand method(next line): loadFromStorage(){
     loadFromStorage: function () {
       this.cartItems = JSON.parse(localStorage.getItem(localStorageKey));
+
 
       if (!this.cartItems) {
         //if the cart is empty, this is the default value

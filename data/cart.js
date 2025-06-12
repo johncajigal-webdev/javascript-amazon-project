@@ -2,6 +2,8 @@ export let cart = undefined;
 
 loadToStorage();
 
+const test = "";
+
 export function loadToStorage() {
   cart = JSON.parse(localStorage.getItem("cart"));
 
